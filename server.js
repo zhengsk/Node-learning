@@ -9,8 +9,21 @@ exports.start = function(route, handle){
 
 		var urlDatas = url.parse(req.url);
 
-		// 路由
-		route(handle, urlDatas.pathname, res);
+		// setEncoding
+		req.setEncoding("utf8");
+		
+		var postData = "";
+		// bind function
+		req.addListener("data", function(postDataChunk){
+			postData += postDataChunk;
+			console.info("Recevied Post data chunk : '" + postDataChunk + "'.");
+		});
+
+		req.addListener("end", function(){
+			// 路由
+			route(handle, urlDatas.pathname, res, postData);
+		});
+
 		
 	}).listen(3000);
 
