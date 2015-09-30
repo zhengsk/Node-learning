@@ -21,7 +21,7 @@ exports.start = function(route, handle){
 
 		req.addListener("end", function(){
 			// 路由
-			route(handle, urlDatas.pathname, res, postData);
+			route(handle, urlDatas.pathname, res, req);
 		});
 
 		
